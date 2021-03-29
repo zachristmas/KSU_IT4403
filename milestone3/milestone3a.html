@@ -17,10 +17,16 @@
 
         .row {
             display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
         }
 
         .column {
-            flex: 50%;
+            display: flex;
+            flex-direction: column;
+            flex-basis: 100%;
+            flex: 1;
         }
 
         .topnav {
@@ -179,7 +185,7 @@
         <h2>My Bookshelf: </h2>
         <div class="row">
             <div class="column" id="bookShelfContainer"></div>
-            <div class="column" id="bookShelfDetailContainer"></div>
+            <div class="column"></div>
         </div>
     </div>
     <script>
@@ -222,6 +228,8 @@
         function getBookDetail(bookId) {
             console.log(bookId);
             $('#bookDetailContainer').empty();
+            $('#bookDetailContainer').show();
+
             //callout to api to get books
             $.get('https://www.googleapis.com/books/v1/volumes/' + bookId, function (data, status) {
                 //init array
@@ -233,23 +241,6 @@
                 //display dynamic values in app container
                 $('#bookDetailContainer').html(booksToMap.map(BookDetail).join(''));
                 $('#bookDetailContainer').css({ position: 'relative', top: window.pageYOffset - 20 + 'px' });
-            });
-        }
-
-        function getBookShelfDetail(bookId) {
-            console.log(bookId);
-            $('#bookShelfDetailContainer').empty();
-            //callout to api to get books
-            $.get('https://www.googleapis.com/books/v1/volumes/' + bookId, function (data, status) {
-                //init array
-                let booksToMap = [];
-                //check for existing data
-                if (data && data.volumeInfo) {
-                    booksToMap.push(data)
-                }
-                //display dynamic values in app container
-                $('#bookShelfDetailContainer').html(booksToMap.map(BookDetail).join(''));
-                $('#bookShelfDetailContainer').css({ position: 'relative', top: window.pageYOffset - 20 + 'px' });
             });
         }
         //init book template
@@ -274,10 +265,10 @@
 
         const BookShelf = ({ ...book }) => `
                 <div class="container">
-                    <a href="javascript:void(0)" onclick="getBookShelfDetail('${book.id}')">
+                    <a href="javascript:void(0)" onclick="getBookDetail('${book.id}')">
                         <img src="${book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail}" alt="${book.volumeInfo.title}" style="width:90px">
                     </a>
-                    <a href="javascript:void(0)" onclick="getBookShelfDetail('${book.id}')">
+                    <a href="javascript:void(0)" onclick="getBookDetail('${book.id}')">
                     <h3>Title: <strong>${book.volumeInfo.title}</strong></h3>
                     </a>
                     <h4>Authors: <strong>${book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</strong></h4>
