@@ -97,6 +97,7 @@
         <a href="./milestone1b.html">MILESTONE 1b</a>
         <a href="../milestone2/milestone2a.html">MILESTONE 2</a>
         <a href="../milestone3/milestone3a.html">MILESTONE 3</a>
+        <a href="../milestone4/milestone4a.html">MILESTONE 4</a>
     </div>
 
     <div class="heading">
@@ -112,7 +113,7 @@
             const Book = ({ ...book }) => `
                 <div class="container">
                     <a href="${book.volumeInfo.infoLink}">
-                        <img src="${book.volumeInfo.imageLinks.smallThumbnail}" alt="${book.volumeInfo.title}" style="width:90px">
+                        <img src="${book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail}" alt="${book.volumeInfo.title}" style="width:90px">
                     </a>
                     <a href="${book.volumeInfo.infoLink}">
                         <h3>Title: <strong>${book.volumeInfo.title}</strong></h3>
@@ -128,7 +129,7 @@
                         <li>Publish Date: ${book.volumeInfo.publishedDate}</li>
                         <li>Page Count: ${book.volumeInfo.pageCount}</li>
                         <li>Print Type: ${book.volumeInfo.printType}</li>
-                        <li>Categories: ${book.volumeInfo.categories.join(', ')}</li>
+                        <li>Categories: ${book.volumeInfo.categories && book.volumeInfo.categories.join(', ')}</li>
                         <li>Sale Info: ${book.saleInfo.saleability}</li>
                     </ul>
                 </div>
